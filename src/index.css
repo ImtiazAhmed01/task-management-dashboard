@@ -1,4 +1,4 @@
-/* :root {
+:root {
     --primary-color: #1b5b40;
     --bg-color: #f7f9fa;
     --text-primary: #1c1d21;
@@ -34,4 +34,4 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #d1d5db;
     border-radius: 4px;
-} */
+}
