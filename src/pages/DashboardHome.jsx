@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Plus, ArrowUpRight, Video, MoreHorizontal, Square, Heart, Triangle, Circle,
-    LayoutDashboard, Pause, Square as SquareIcon
+    LayoutDashboard, Pause, Play, Square as SquareIcon
 } from 'lucide-react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -9,6 +9,45 @@ import 'react-circular-progressbar/dist/styles.css';
 const DashboardHome = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    // Timer state
+    const [time, setTime] = useState(0); // in seconds
+    const [isRunning, setIsRunning] = useState(false);
+    const timerRef = useRef(null);
+
+    // Modal state
+    const [showModal, setShowModal] = useState(false);
+
+    // Format time function
+    const formatTime = (totalSeconds) => {
+        const h = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+        const s = (totalSeconds % 60).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    };
+
+    // Timer controls
+    const toggleTimer = () => {
+        if (isRunning) {
+            clearInterval(timerRef.current);
+        } else {
+            timerRef.current = setInterval(() => {
+                setTime((prevTime) => prevTime + 1);
+            }, 1000);
+        }
+        setIsRunning(!isRunning);
+    };
+
+    const stopTimer = () => {
+        clearInterval(timerRef.current);
+        setIsRunning(false);
+        setTime(0);
+    };
+
+    // Cleanup interval on unmount
+    useEffect(() => {
+        return () => clearInterval(timerRef.current);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -141,7 +180,9 @@ const DashboardHome = () => {
                             </div>
                             <h4 className="reminder-title">Meeting with Arc<br />Company</h4>
                             <div className="reminder-time">Time : 02.00 pm - 04.00 pm</div>
-                            <button className="btn-meeting"><Video size={18} /> Start Meeting</button>
+                            <button className="btn-meeting" onClick={() => setShowModal(true)}>
+                                <Video size={18} /> Start Meeting
+                            </button>
                         </div>
                     </div>
 
@@ -227,16 +268,34 @@ const DashboardHome = () => {
                     <div className="time-tracker">
                         <div className="tracker-content">
                             <div className="tracker-title">Time Tracker</div>
-                            <div className="time-display">01:24:08</div>
+                            <div className="time-display">{formatTime(time)}</div>
                             <div className="tracker-controls">
-                                <button className="control-btn btn-pause"><Pause size={20} fill="currentColor" /></button>
-                                <button className="control-btn btn-stop"><SquareIcon size={16} fill="currentColor" /></button>
+                                <button className="control-btn btn-pause" onClick={toggleTimer}>
+                                    {isRunning ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
+                                </button>
+                                <button className="control-btn btn-stop" onClick={stopTimer}>
+                                    <SquareIcon size={16} fill="currentColor" />
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+
+            {/* Modal Overlay */}
+            {showModal && (
+                <div className="modal-overlay" onClick={() => setShowModal(false)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <h2 style={{ marginBottom: '1rem', color: '#1c1d21' }}>Starting Meeting...</h2>
+                        <p style={{ color: '#8c8c8c', marginBottom: '2rem' }}>Connecting to Arc Company video bridge.</p>
+                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                            <button className="btn-outline" onClick={() => setShowModal(false)}>Cancel</button>
+                            <button className="btn-primary" onClick={() => setShowModal(false)}>Join Audio</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };
