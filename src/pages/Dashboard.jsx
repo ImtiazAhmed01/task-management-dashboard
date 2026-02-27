@@ -32,7 +32,6 @@ const Dashboard = () => {
             }
         };
 
-        // Add a slight delay for aesthetic loading presentation
         setTimeout(fetchData, 600);
     }, []);
 

@@ -25,9 +25,8 @@ const DashboardLayout = () => {
     };
 
     const getMenuClass = (path) => {
-        // Exact path for dashboard
         if (path === '/dashboard' && location.pathname === '/dashboard') return 'menu-item active';
-        // Nested paths
+
         if (path !== '/dashboard' && location.pathname.startsWith(path)) return 'menu-item active';
         return 'menu-item';
     };

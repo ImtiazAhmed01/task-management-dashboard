@@ -92,7 +92,7 @@ const Analytics = () => {
                     <div className="chart-container" style={{ height: '280px', padding: '0 2rem' }}>
                         {analyticsData.map((d, i) => {
                             const viewHeight = (d.views / maxViews) * 100;
-                            const clickHeight = (d.clicks / maxViews) * 100; // Relative to maxViews for comparison
+                            const clickHeight = (d.clicks / maxViews) * 100;
                             const date = new Date(d.date).toLocaleDateString('en-US', { weekday: 'short' });
                             return (
                                 <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: '100%' }}>

@@ -762,7 +762,6 @@
     }
 }
 
-/* Modals */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -809,7 +808,6 @@
     }
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -864,7 +862,6 @@
         gap: 1rem;
     }
 
-    /* Table Responsive */
     table {
         display: block;
         overflow-x: auto;

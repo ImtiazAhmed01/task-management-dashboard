@@ -15,7 +15,7 @@ const Users = () => {
 
     const fetchUserDetail = async (id) => {
         setLoadingUser(true);
-        setSelectedUser({ id }); // Set just ID to trigger modal opening immediately
+        setSelectedUser({ id });
         try {
             const response = await fetch(`https://task-api-eight-flax.vercel.app/api/users/${id}`, {
                 headers: {
@@ -96,7 +96,7 @@ const Users = () => {
                     >
                         <option value="all">All Statuses</option>
                         <option value="active">Active</option>
-                        <option value="pending">Pending</option>
+                        <option value="inactive">Inactive</option>
                     </select>
                     <button className="btn-primary" onClick={() => setShowAddModal(true)}>Add New User</button>
                 </div>
@@ -232,7 +232,7 @@ const Users = () => {
                                     <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Status</label>
                                     <select style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e1e4e8' }} value={newUserForm.status} onChange={e => setNewUserForm({ ...newUserForm, status: e.target.value })}>
                                         <option value="active">Active</option>
-                                        <option value="pending">Pending</option>
+                                        <option value="pending">Inactive</option>
                                     </select>
                                 </div>
                             </div>

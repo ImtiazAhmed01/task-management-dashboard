@@ -10,15 +10,11 @@ const DashboardHome = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Timer state
-    const [time, setTime] = useState(0); // in seconds
+    const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const timerRef = useRef(null);
-
-    // Modal state
     const [showModal, setShowModal] = useState(false);
 
-    // Format time function
     const formatTime = (totalSeconds) => {
         const h = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
         const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
@@ -26,7 +22,6 @@ const DashboardHome = () => {
         return `${h}:${m}:${s}`;
     };
 
-    // Timer controls
     const toggleTimer = () => {
         if (isRunning) {
             clearInterval(timerRef.current);
@@ -44,7 +39,6 @@ const DashboardHome = () => {
         setTime(0);
     };
 
-    // Cleanup interval on unmount
     useEffect(() => {
         return () => clearInterval(timerRef.current);
     }, []);
