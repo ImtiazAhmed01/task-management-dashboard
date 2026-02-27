@@ -50,7 +50,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-box">
-                <h2 className="login-title">Welcome to Donezo</h2>
+                <h2 className="login-title">Welcome to Donezo, A Task Management Dashboard</h2>
                 <p className="login-subtitle">Sign in to continue</p>
                 {error && <div className="login-error">{error}</div>}
                 <form onSubmit={handleLogin} className="login-form">
